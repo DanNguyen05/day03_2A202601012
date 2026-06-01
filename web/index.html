@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Lab 3 Agent Demo</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="workspace">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Lab 3</p>
+            <h1>Chatbot vs ReAct Agent</h1>
+          </div>
+          <div class="status-pill" id="status">Ready</div>
+        </header>
+
+        <section class="control-panel" aria-label="Prompt controls">
+          <div class="mode-grid" role="radiogroup" aria-label="AI mode">
+            <button class="mode-button active" data-mode="agent_v2" type="button">
+              <span class="mode-icon">A2</span>
+              <span>
+                <strong>ReAct Agent V2</strong>
+                <small>Guardrails + tools</small>
+              </span>
+            </button>
+            <button class="mode-button" data-mode="agent_v1" type="button">
+              <span class="mode-icon">A1</span>
+              <span>
+                <strong>ReAct Agent V1</strong>
+                <small>Group baseline</small>
+              </span>
+            </button>
+            <button class="mode-button" data-mode="chatbot" type="button">
+              <span class="mode-icon">C</span>
+              <span>
+                <strong>Chatbot Baseline</strong>
+                <small>No tools</small>
+              </span>
+            </button>
+            <button class="mode-button" data-mode="mock" type="button">
+              <span class="mode-icon">M</span>
+              <span>
+                <strong>Mock Demo</strong>
+                <small>No API quota</small>
+              </span>
+            </button>
+          </div>
+
+          <label class="prompt-label" for="question">Question</label>
+          <textarea id="question" rows="5">I want to buy 2 iPhones using coupon WINNER and ship to Hanoi. What is the final total?</textarea>
+
+          <div class="actions">
+            <button id="submit" class="primary-button" type="button">Ask Selected Mode</button>
+            <button id="sample" class="secondary-button" type="button">MacBook Stock Case</button>
+          </div>
+        </section>
+
+        <section class="answer-panel" aria-live="polite">
+          <div class="answer-header">
+            <h2>Answer</h2>
+            <span id="active-mode">ReAct Agent V2</span>
+          </div>
+          <pre id="answer">Choose a mode and ask a question. Use Mock Demo when Gemini quota is exhausted.</pre>
+        </section>
+      </section>
+
+      <aside class="tool-panel">
+        <h2>Tool Inventory</h2>
+        <ul>
+          <li><strong>get_product_info</strong><span>price, stock, weight</span></li>
+          <li><strong>check_stock</strong><span>requested quantity check</span></li>
+          <li><strong>get_discount</strong><span>coupon validation</span></li>
+          <li><strong>calc_shipping</strong><span>destination shipping</span></li>
+          <li><strong>calculator</strong><span>safe arithmetic</span></li>
+        </ul>
+        <div class="note">
+          API keys stay on the Python server. The browser only sends the selected mode and question.
+        </div>
+      </aside>
+    </main>
+
+    <script src="/app.js"></script>
+  </body>
+</html>
