@@ -14,6 +14,7 @@ Our group built a Smart E-commerce Assistant to compare a normal LLM chatbot aga
 - **Scenario**: Customer asks for final purchase cost with product quantity, coupon code, and shipping destination.
 - **V1 Outcome**: The ReAct agent successfully completed the iPhone test case in logged runs by calling tools step by step.
 - **Key Difference**: The chatbot estimated prices and shipping from general knowledge, while the ReAct agent grounded its answer in tool observations.
+- **Dataset**: Controlled mock data in `data/products.json`, `data/coupons.json`, and `data/shipping_rates.json`.
 - **Latest Runtime Issue**: The newest live run hit Gemini free-tier quota/high-demand errors (`429 RESOURCE_EXHAUSTED`). This is an API quota issue, not a code failure, and is recorded as a failure trace.
 
 ---
@@ -81,7 +82,17 @@ Tool file:
 src/tools/ecommerce_tools.py
 ```
 
-### 2.3 LLM Provider
+### 2.3 Controlled Mock Dataset
+
+The dataset is intentionally deterministic so we can verify exact answers and compare chatbot guesses against tool-grounded agent outputs.
+
+| File | Content |
+| :--- | :--- |
+| `data/products.json` | 30 product records with price, category, weight, and stock. |
+| `data/coupons.json` | 5 coupon records with validity and discount percentage. |
+| `data/shipping_rates.json` | 7 city shipping-rate records. |
+
+### 2.4 LLM Provider
 
 - **Primary Provider**: Gemini through an OpenAI-compatible endpoint.
 - **Model**: `gemini-2.5-flash`

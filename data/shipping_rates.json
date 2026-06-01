@@ -1,0 +1,30 @@
+{
+  "hanoi": {
+    "base_usd": 6.0,
+    "per_kg_usd": 2.0
+  },
+  "ho chi minh": {
+    "base_usd": 7.0,
+    "per_kg_usd": 2.5
+  },
+  "danang": {
+    "base_usd": 6.5,
+    "per_kg_usd": 2.2
+  },
+  "hue": {
+    "base_usd": 6.2,
+    "per_kg_usd": 2.1
+  },
+  "can tho": {
+    "base_usd": 7.5,
+    "per_kg_usd": 2.6
+  },
+  "hai phong": {
+    "base_usd": 6.4,
+    "per_kg_usd": 2.1
+  },
+  "nha trang": {
+    "base_usd": 7.2,
+    "per_kg_usd": 2.4
+  }
+}

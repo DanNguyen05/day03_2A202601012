@@ -1,0 +1,22 @@
+{
+  "WINNER": {
+    "percent": 10,
+    "valid": true
+  },
+  "STUDENT": {
+    "percent": 15,
+    "valid": true
+  },
+  "WELCOME": {
+    "percent": 5,
+    "valid": true
+  },
+  "VIP": {
+    "percent": 20,
+    "valid": true
+  },
+  "EXPIRED": {
+    "percent": 0,
+    "valid": false
+  }
+}

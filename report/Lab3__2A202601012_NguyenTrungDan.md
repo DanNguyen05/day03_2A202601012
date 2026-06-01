@@ -18,6 +18,7 @@ This lab compares a direct LLM chatbot against a ReAct agent for a Smart E-comme
 - **V1 Goal**: Build a working group baseline with chatbot baseline, ReAct loop, tools, and telemetry.
 - **V1 Result**: The agent completed the iPhone total-cost scenario through tool calls and logged successful traces.
 - **Key Finding**: The chatbot estimated missing facts, while the ReAct agent grounded its answer in tool observations.
+- **Dataset**: Controlled mock data in `data/products.json`, `data/coupons.json`, and `data/shipping_rates.json`.
 - **Runtime Failure Trace**: Gemini free-tier quota produced `429 RESOURCE_EXHAUSTED`; this is documented as an API quota failure, not a code failure.
 
 ## Architecture
@@ -42,6 +43,18 @@ flowchart TD
 | `get_discount` | Validates coupon code and returns discount percentage. |
 | `calc_shipping` | Calculates shipping cost by weight and destination. |
 | `calculator` | Safely evaluates arithmetic expressions. |
+
+## Controlled Mock Dataset
+
+The project uses a deterministic mock dataset instead of live scraped data:
+
+| File | Content |
+| :--- | :--- |
+| `data/products.json` | 30 product records with category, price, weight, and stock. |
+| `data/coupons.json` | 5 coupon records with validity and discount percentages. |
+| `data/shipping_rates.json` | 7 city shipping-rate records with base and per-kg costs. |
+
+This is intentional. The lab focuses on ReAct reasoning, tool execution, telemetry, and failure recovery. A controlled dataset gives known ground-truth values, making it possible to compare chatbot guesses against tool-grounded agent answers.
 
 ## Provider
 

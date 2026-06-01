@@ -1,0 +1,212 @@
+{
+  "iphone": {
+    "display_name": "iPhone 15",
+    "category": "phone",
+    "price_usd": 799.0,
+    "weight_kg": 0.22,
+    "stock": 8
+  },
+  "airpods": {
+    "display_name": "AirPods Pro",
+    "category": "audio",
+    "price_usd": 249.0,
+    "weight_kg": 0.06,
+    "stock": 15
+  },
+  "macbook": {
+    "display_name": "MacBook Air M3",
+    "category": "laptop",
+    "price_usd": 1099.0,
+    "weight_kg": 1.24,
+    "stock": 4
+  },
+  "ipad": {
+    "display_name": "iPad Air",
+    "category": "tablet",
+    "price_usd": 599.0,
+    "weight_kg": 0.46,
+    "stock": 10
+  },
+  "apple_watch": {
+    "display_name": "Apple Watch Series 9",
+    "category": "wearable",
+    "price_usd": 399.0,
+    "weight_kg": 0.04,
+    "stock": 12
+  },
+  "samsung_s24": {
+    "display_name": "Samsung Galaxy S24",
+    "category": "phone",
+    "price_usd": 749.0,
+    "weight_kg": 0.19,
+    "stock": 9
+  },
+  "pixel_8": {
+    "display_name": "Google Pixel 8",
+    "category": "phone",
+    "price_usd": 699.0,
+    "weight_kg": 0.19,
+    "stock": 7
+  },
+  "dell_xps": {
+    "display_name": "Dell XPS 13",
+    "category": "laptop",
+    "price_usd": 999.0,
+    "weight_kg": 1.17,
+    "stock": 5
+  },
+  "sony_headphones": {
+    "display_name": "Sony WH-1000XM5",
+    "category": "audio",
+    "price_usd": 349.0,
+    "weight_kg": 0.25,
+    "stock": 11
+  },
+  "kindle": {
+    "display_name": "Kindle Paperwhite",
+    "category": "reader",
+    "price_usd": 149.0,
+    "weight_kg": 0.21,
+    "stock": 18
+  },
+  "logitech_mouse": {
+    "display_name": "Logitech MX Master 3S",
+    "category": "accessory",
+    "price_usd": 99.0,
+    "weight_kg": 0.14,
+    "stock": 25
+  },
+  "mechanical_keyboard": {
+    "display_name": "Keychron K2 Mechanical Keyboard",
+    "category": "accessory",
+    "price_usd": 89.0,
+    "weight_kg": 0.79,
+    "stock": 14
+  },
+  "monitor_27": {
+    "display_name": "Dell 27 Inch Monitor",
+    "category": "display",
+    "price_usd": 229.0,
+    "weight_kg": 4.2,
+    "stock": 6
+  },
+  "usb_c_hub": {
+    "display_name": "Anker USB-C Hub",
+    "category": "accessory",
+    "price_usd": 49.0,
+    "weight_kg": 0.09,
+    "stock": 30
+  },
+  "power_bank": {
+    "display_name": "Anker Power Bank 20000mAh",
+    "category": "accessory",
+    "price_usd": 59.0,
+    "weight_kg": 0.35,
+    "stock": 22
+  },
+  "camera": {
+    "display_name": "Canon EOS R50",
+    "category": "camera",
+    "price_usd": 679.0,
+    "weight_kg": 0.38,
+    "stock": 3
+  },
+  "nintendo_switch": {
+    "display_name": "Nintendo Switch OLED",
+    "category": "gaming",
+    "price_usd": 349.0,
+    "weight_kg": 0.42,
+    "stock": 8
+  },
+  "ps5": {
+    "display_name": "PlayStation 5",
+    "category": "gaming",
+    "price_usd": 499.0,
+    "weight_kg": 4.5,
+    "stock": 2
+  },
+  "xbox_series_x": {
+    "display_name": "Xbox Series X",
+    "category": "gaming",
+    "price_usd": 499.0,
+    "weight_kg": 4.45,
+    "stock": 3
+  },
+  "office_chair": {
+    "display_name": "Ergonomic Office Chair",
+    "category": "furniture",
+    "price_usd": 199.0,
+    "weight_kg": 14.0,
+    "stock": 5
+  },
+  "standing_desk": {
+    "display_name": "Electric Standing Desk",
+    "category": "furniture",
+    "price_usd": 329.0,
+    "weight_kg": 28.0,
+    "stock": 4
+  },
+  "backpack": {
+    "display_name": "Laptop Travel Backpack",
+    "category": "bag",
+    "price_usd": 79.0,
+    "weight_kg": 0.9,
+    "stock": 20
+  },
+  "smart_speaker": {
+    "display_name": "Amazon Echo Dot",
+    "category": "smart_home",
+    "price_usd": 49.0,
+    "weight_kg": 0.34,
+    "stock": 19
+  },
+  "drone": {
+    "display_name": "DJI Mini 4 Pro",
+    "category": "camera",
+    "price_usd": 759.0,
+    "weight_kg": 0.25,
+    "stock": 3
+  },
+  "router": {
+    "display_name": "TP-Link WiFi 6 Router",
+    "category": "networking",
+    "price_usd": 129.0,
+    "weight_kg": 0.62,
+    "stock": 13
+  },
+  "webcam": {
+    "display_name": "Logitech Brio Webcam",
+    "category": "accessory",
+    "price_usd": 149.0,
+    "weight_kg": 0.09,
+    "stock": 16
+  },
+  "microphone": {
+    "display_name": "Blue Yeti Microphone",
+    "category": "audio",
+    "price_usd": 129.0,
+    "weight_kg": 0.55,
+    "stock": 10
+  },
+  "graphics_tablet": {
+    "display_name": "Wacom Intuos",
+    "category": "creative",
+    "price_usd": 99.0,
+    "weight_kg": 0.45,
+    "stock": 9
+  },
+  "external_ssd": {
+    "display_name": "Samsung T7 1TB SSD",
+    "category": "storage",
+    "price_usd": 109.0,
+    "weight_kg": 0.06,
+    "stock": 24
+  },
+  "printer": {
+    "display_name": "HP LaserJet Printer",
+    "category": "office",
+    "price_usd": 189.0,
+    "weight_kg": 6.8,
+    "stock": 6
+  }
+}

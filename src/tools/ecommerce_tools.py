@@ -1,25 +1,16 @@
 import ast
+import json
 import operator
+from pathlib import Path
 from typing import Any, Dict, List
 
 
-PRODUCTS = {
-    "iphone": {"display_name": "iPhone 15", "price_usd": 799.0, "weight_kg": 0.22, "stock": 8},
-    "airpods": {"display_name": "AirPods Pro", "price_usd": 249.0, "weight_kg": 0.06, "stock": 15},
-    "macbook": {"display_name": "MacBook Air M3", "price_usd": 1099.0, "weight_kg": 1.24, "stock": 4},
-}
+ROOT_DIR = Path(__file__).resolve().parents[2]
+DATA_DIR = ROOT_DIR / "data"
 
-COUPONS = {
-    "WINNER": {"percent": 10, "valid": True},
-    "STUDENT": {"percent": 15, "valid": True},
-    "EXPIRED": {"percent": 0, "valid": False},
-}
-
-SHIPPING_RATES = {
-    "hanoi": {"base_usd": 6.0, "per_kg_usd": 2.0},
-    "ho chi minh": {"base_usd": 7.0, "per_kg_usd": 2.5},
-    "danang": {"base_usd": 6.5, "per_kg_usd": 2.2},
-}
+PRODUCTS = json.loads((DATA_DIR / "products.json").read_text(encoding="utf-8"))
+COUPONS = json.loads((DATA_DIR / "coupons.json").read_text(encoding="utf-8"))
+SHIPPING_RATES = json.loads((DATA_DIR / "shipping_rates.json").read_text(encoding="utf-8"))
 
 ALLOWED_OPERATORS = {
     ast.Add: operator.add,
@@ -32,7 +23,7 @@ ALLOWED_OPERATORS = {
 
 def get_product_info(item_name: str) -> Dict[str, Any]:
     """Return price, stock, and weight for a supported product."""
-    key = item_name.strip().lower()
+    key = _normalize_product_key(item_name)
     if key not in PRODUCTS:
         return {"found": False, "message": f"Product '{item_name}' is not in the catalog."}
     return {"found": True, "item_name": key, **PRODUCTS[key]}
@@ -112,12 +103,16 @@ def _eval_math_node(node: ast.AST) -> float:
     raise ValueError("Only simple arithmetic expressions are allowed.")
 
 
+def _normalize_product_key(item_name: str) -> str:
+    return item_name.strip().lower().replace("-", "_").replace(" ", "_")
+
+
 ECOMMERCE_TOOLS: List[Dict[str, Any]] = [
     {
         "name": "get_product_info",
         "description": (
             "Get product price_usd, weight_kg, and stock. "
-            "Input JSON: {\"item_name\": \"iphone|airpods|macbook\"}."
+            "Input JSON: {\"item_name\": \"iphone|airpods|macbook|external_ssd|...\"}."
         ),
         "function": get_product_info,
     },
@@ -125,7 +120,7 @@ ECOMMERCE_TOOLS: List[Dict[str, Any]] = [
         "name": "get_discount",
         "description": (
             "Check a coupon and return its discount percent. "
-            "Input JSON: {\"coupon_code\": \"WINNER|STUDENT|EXPIRED\"}."
+            "Input JSON: {\"coupon_code\": \"WINNER|STUDENT|WELCOME|VIP|EXPIRED\"}."
         ),
         "function": get_discount,
     },
@@ -133,7 +128,7 @@ ECOMMERCE_TOOLS: List[Dict[str, Any]] = [
         "name": "check_stock",
         "description": (
             "Check if requested quantity is available before purchase. "
-            "Input JSON: {\"item_name\": \"iphone|airpods|macbook\", \"quantity\": number}."
+            "Input JSON: {\"item_name\": \"iphone|airpods|macbook|external_ssd|...\", \"quantity\": number}."
         ),
         "function": check_stock,
     },
@@ -141,7 +136,7 @@ ECOMMERCE_TOOLS: List[Dict[str, Any]] = [
         "name": "calc_shipping",
         "description": (
             "Calculate shipping cost. "
-            "Input JSON: {\"weight_kg\": number, \"destination\": \"Hanoi|Ho Chi Minh|Danang\"}."
+            "Input JSON: {\"weight_kg\": number, \"destination\": \"Hanoi|Ho Chi Minh|Danang|Hue|Can Tho\"}."
         ),
         "function": calc_shipping,
     },
