@@ -8,18 +8,53 @@
   </head>
   <body>
     <main class="app-shell">
-      <section class="workspace">
-        <header class="topbar">
-          <div>
-            <p class="eyebrow">Lab 3</p>
-            <h1>Chatbot vs ReAct Agent</h1>
+      <section class="hero-band">
+        <div class="hero-copy">
+          <p class="eyebrow">Lab 3 Dashboard</p>
+          <h1>Chatbot vs ReAct Agent</h1>
+          <p class="hero-subtitle">
+            Compare direct LLM answers with a tool-grounded e-commerce agent using a controlled mock dataset.
+          </p>
+        </div>
+        <div class="metric-strip" aria-label="Dataset summary">
+          <div class="metric-tile">
+            <span id="product-count">30</span>
+            <small>Products</small>
           </div>
-          <div class="status-pill" id="status">Ready</div>
-        </header>
+          <div class="metric-tile">
+            <span id="coupon-count">5</span>
+            <small>Coupons</small>
+          </div>
+          <div class="metric-tile">
+            <span id="city-count">7</span>
+            <small>Cities</small>
+          </div>
+          <div class="metric-tile">
+            <span id="tool-count">5</span>
+            <small>Tools</small>
+          </div>
+        </div>
+      </section>
 
-        <section class="control-panel" aria-label="Prompt controls">
+      <section class="main-grid">
+        <section class="workspace">
+          <header class="section-header">
+            <div>
+              <h2>Prompt Console</h2>
+              <p>Mock Demo is selected by default so the demo works even when Gemini quota is exhausted.</p>
+            </div>
+            <div class="status-pill" id="status">Ready</div>
+          </header>
+
           <div class="mode-grid" role="radiogroup" aria-label="AI mode">
-            <button class="mode-button active" data-mode="agent_v2" type="button">
+            <button class="mode-button active" data-mode="mock" type="button">
+              <span class="mode-icon">M</span>
+              <span>
+                <strong>Mock Demo</strong>
+                <small>No API quota</small>
+              </span>
+            </button>
+            <button class="mode-button" data-mode="agent_v2" type="button">
               <span class="mode-icon">A2</span>
               <span>
                 <strong>ReAct Agent V2</strong>
@@ -40,13 +75,6 @@
                 <small>No tools</small>
               </span>
             </button>
-            <button class="mode-button" data-mode="mock" type="button">
-              <span class="mode-icon">M</span>
-              <span>
-                <strong>Mock Demo</strong>
-                <small>No API quota</small>
-              </span>
-            </button>
           </div>
 
           <label class="prompt-label" for="question">Question</label>
@@ -54,32 +82,53 @@
 
           <div class="actions">
             <button id="submit" class="primary-button" type="button">Ask Selected Mode</button>
-            <button id="sample" class="secondary-button" type="button">MacBook Stock Case</button>
+            <button id="sample-stock" class="secondary-button" type="button">MacBook Stock Case</button>
+            <button id="sample-heavy" class="secondary-button" type="button">Heavy Shipping Case</button>
           </div>
         </section>
 
         <section class="answer-panel" aria-live="polite">
-          <div class="answer-header">
-            <h2>Answer</h2>
-            <span id="active-mode">ReAct Agent V2</span>
+          <div class="section-header compact">
+            <div>
+              <h2>Answer</h2>
+              <p id="active-mode">Mock Demo</p>
+            </div>
           </div>
-          <pre id="answer">Choose a mode and ask a question. Use Mock Demo when Gemini quota is exhausted.</pre>
+          <pre id="answer">Ask the default Mock Demo to see an offline ReAct trace with no quota usage.</pre>
         </section>
-      </section>
 
-      <aside class="tool-panel">
-        <h2>Tool Inventory</h2>
-        <ul>
-          <li><strong>get_product_info</strong><span>price, stock, weight</span></li>
-          <li><strong>check_stock</strong><span>requested quantity check</span></li>
-          <li><strong>get_discount</strong><span>coupon validation</span></li>
-          <li><strong>calc_shipping</strong><span>destination shipping</span></li>
-          <li><strong>calculator</strong><span>safe arithmetic</span></li>
-        </ul>
-        <div class="note">
-          API keys stay on the Python server. The browser only sends the selected mode and question.
-        </div>
-      </aside>
+        <section class="trace-panel">
+          <div class="section-header compact">
+            <div>
+              <h2>ReAct Trace</h2>
+              <p>Thought, Action, and Observation steps appear here.</p>
+            </div>
+          </div>
+          <ol id="trace-list" class="trace-list">
+            <li class="trace-empty">No trace yet.</li>
+          </ol>
+        </section>
+
+        <aside class="dataset-panel">
+          <div class="section-header compact">
+            <div>
+              <h2>Dataset Preview</h2>
+              <p>Controlled mock catalog loaded from JSON files.</p>
+            </div>
+          </div>
+          <div id="product-grid" class="product-grid"></div>
+          <div class="dataset-footer">
+            <div>
+              <strong>Coupons</strong>
+              <span id="coupon-list">Loading...</span>
+            </div>
+            <div>
+              <strong>Shipping Cities</strong>
+              <span id="city-list">Loading...</span>
+            </div>
+          </div>
+        </aside>
+      </section>
     </main>
 
     <script src="/app.js"></script>

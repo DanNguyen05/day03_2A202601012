@@ -230,3 +230,13 @@ Recommended individual V2 directions:
 - Better tool argument validation.
 - Provider fallback or mock evaluation mode.
 - Expanded test suite with automated success scoring.
+
+## 9. Web Demo Dashboard
+
+The project includes a local dashboard:
+
+```bash
+python web_demo.py
+```
+
+It supports Chatbot Baseline, ReAct Agent V1, ReAct Agent V2, and Mock Demo. The dashboard also shows dataset counts, product preview cards, coupon/city lists, and a Thought-Action-Observation trace panel. Mock Demo is the default mode so the system can be demonstrated even when Gemini quota is exhausted.

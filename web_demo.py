@@ -11,10 +11,50 @@ from src.agent.agent_v2 import ReActAgentV2
 from src.core.llm_provider import LLMProvider
 from src.core.openai_provider import OpenAIProvider
 from src.tools import ECOMMERCE_TOOLS
+from src.tools.ecommerce_tools import COUPONS, PRODUCTS, SHIPPING_RATES
 
 
 ROOT = Path(__file__).resolve().parent
 WEB_DIR = ROOT / "web"
+
+MOCK_TRACE = [
+    {
+        "step": 1,
+        "thought": "Need product price, weight, and stock.",
+        "action": 'get_product_info({"item_name": "iphone"})',
+        "observation": "iPhone 15 price is 799 USD, weight is 0.22 kg, stock is 8.",
+    },
+    {
+        "step": 2,
+        "thought": "Need to verify requested quantity.",
+        "action": 'check_stock({"item_name": "iphone", "quantity": 2})',
+        "observation": "Enough stock: requested 2, available 8.",
+    },
+    {
+        "step": 3,
+        "thought": "Need coupon discount.",
+        "action": 'get_discount({"coupon_code": "WINNER"})',
+        "observation": "WINNER is valid with 10% discount.",
+    },
+    {
+        "step": 4,
+        "thought": "Need package weight.",
+        "action": 'calculator({"expression": "0.22*2"})',
+        "observation": "Total weight is 0.44 kg.",
+    },
+    {
+        "step": 5,
+        "thought": "Need shipping cost.",
+        "action": 'calc_shipping({"weight_kg": 0.44, "destination": "Hanoi"})',
+        "observation": "Shipping to Hanoi is 6.88 USD.",
+    },
+    {
+        "step": 6,
+        "thought": "Need final total.",
+        "action": 'calculator({"expression": "799*2*(1-0.10)+6.88"})',
+        "observation": "Final total is 1445.08 USD.",
+    },
+]
 
 
 class MockReActLLM(LLMProvider):
@@ -46,6 +86,10 @@ class MockReActLLM(LLMProvider):
 
 class DemoHandler(BaseHTTPRequestHandler):
     def do_GET(self) -> None:
+        if self.path == "/api/dataset":
+            self._send_json(get_dataset_payload())
+            return
+
         if self.path in {"/", "/index.html"}:
             self._serve_file(WEB_DIR / "index.html")
             return
@@ -72,8 +116,8 @@ class DemoHandler(BaseHTTPRequestHandler):
                 self._send_json({"error": "Question is required."}, status=400)
                 return
 
-            answer = run_mode(mode, question)
-            self._send_json({"answer": answer, "mode": mode})
+            result = run_mode(mode, question)
+            self._send_json(result)
         except Exception as exc:
             self._send_json(
                 {
@@ -113,17 +157,72 @@ class DemoHandler(BaseHTTPRequestHandler):
         return
 
 
-def run_mode(mode: str, question: str) -> str:
+def run_mode(mode: str, question: str) -> Dict[str, Any]:
     if mode == "chatbot":
-        return ChatbotBaseline(OpenAIProvider()).run(question)
+        return {
+            "answer": ChatbotBaseline(OpenAIProvider()).run(question),
+            "mode": mode,
+            "trace": [
+                {
+                    "step": 1,
+                    "thought": "Direct model response.",
+                    "action": "No tool call",
+                    "observation": "The chatbot baseline does not use external tools.",
+                }
+            ],
+        }
 
     if mode == "agent_v1":
-        return ReActAgent(OpenAIProvider(), ECOMMERCE_TOOLS, max_steps=6).run(question)
+        return {
+            "answer": ReActAgent(OpenAIProvider(), ECOMMERCE_TOOLS, max_steps=6).run(question),
+            "mode": mode,
+            "trace": [
+                {
+                    "step": 1,
+                    "thought": "Live V1 trace is written to logs/ as AGENT_STEP and TOOL_CALL events.",
+                    "action": "See logs/YYYY-MM-DD.log",
+                    "observation": "Use Mock Demo for an always-available visual trace.",
+                }
+            ],
+        }
 
     if mode == "mock":
-        return ReActAgentV2(MockReActLLM(), ECOMMERCE_TOOLS, max_steps=7).run(question)
+        return {
+            "answer": ReActAgentV2(MockReActLLM(), ECOMMERCE_TOOLS, max_steps=7).run(question),
+            "mode": mode,
+            "trace": MOCK_TRACE,
+        }
 
-    return ReActAgentV2(OpenAIProvider(), ECOMMERCE_TOOLS, max_steps=7).run(question)
+    return {
+        "answer": ReActAgentV2(OpenAIProvider(), ECOMMERCE_TOOLS, max_steps=7).run(question),
+        "mode": mode,
+        "trace": [
+            {
+                "step": 1,
+                "thought": "Live V2 trace is written to logs/ as AGENT_V2_STEP, TOOL_CALL, and V2_RECOVERY events.",
+                "action": "See logs/YYYY-MM-DD.log",
+                "observation": "Use Mock Demo for quota-free trace playback.",
+            }
+        ],
+    }
+
+
+def get_dataset_payload() -> Dict[str, Any]:
+    product_items = [
+        {"key": key, **value}
+        for key, value in sorted(PRODUCTS.items(), key=lambda item: item[0])
+    ]
+    return {
+        "counts": {
+            "products": len(PRODUCTS),
+            "coupons": len(COUPONS),
+            "shipping_cities": len(SHIPPING_RATES),
+            "tools": len(ECOMMERCE_TOOLS),
+        },
+        "products": product_items[:12],
+        "coupons": sorted(COUPONS.keys()),
+        "shipping_cities": sorted(SHIPPING_RATES.keys()),
+    }
 
 
 def main() -> None:

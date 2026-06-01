@@ -118,6 +118,8 @@ The UI supports:
 - ReAct Agent V1
 - ReAct Agent V2
 - Mock Demo for quota-free demonstration
+- Dataset dashboard with product, coupon, city, and tool counts
+- ReAct trace panel showing Thought, Action, and Observation steps
 
 ---
 
@@ -140,7 +142,7 @@ Files implemented:
 | `src/agent/agent_v2.py` | Personal V2 agent with guardrails and recovery. |
 | `run_v2_demo.py` | V2 command-line runner. |
 | `tests/test_agent_v2.py` | Mock tests for recovery behavior. |
-| `web_demo.py` and `web/` | Local demo UI for chatbot vs agent comparison. |
+| `web_demo.py` and `web/` | Local dashboard UI for chatbot vs agent comparison, dataset preview, and trace playback. |
 
 ## Debugging Case Study
 
